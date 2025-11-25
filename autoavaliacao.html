@@ -1,0 +1,1292 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Brasfort.AI</title>
+    <style>
+        :root {
+            --brand: #0f44d6;
+            --brand-dark: #263868;
+            --bg-start: #e7eefb;
+            --bot-bubble: #dff0ff;
+            --user-bubble: #dcf8c6;
+            --muted: #697582;
+            --glass: rgba(255, 255, 255, 0.97);
+            --chat-width: 420px;
+            --radius: 16px;
+            --header-height: 72px;
+            --font: 'Barlow', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            --card-red: #fde2e2;
+            --card-yellow: #fff4d6;
+            --card-green: #e6f7e9;
+            --card-blue: #dfeeff;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: var(--font);
+            background: linear-gradient(180deg, var(--bg-start) 0%, #eef4fb 100%);
+            color: #17324a;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+
+        /* layout */
+        .stage {
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 0 18px 18px 18px;
+            fade
+        }
+
+        .app {
+            width: 100%;
+            max-width: calc(var(--chat-width) + 320px);
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            justify-content: center;
+            position: relative
+        }
+
+        /* phone mock */
+        .phone {
+            width: var(--chat-width);
+            background: var(--glass);
+            border-radius: 0 0 18px 18px;
+            /* 🔵 Só as bordas de baixo arredondadas */
+            box-shadow: 0 18px 35px rgba(16, 40, 80, 0.12);
+            overflow: hidden;
+            border: none;
+            /* 🔵 remove a linha branca em volta */
+            height: 100vh;
+            /* 🔵 ocupa toda a altura da tela */
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* header fixed */
+        .header {
+            background: linear-gradient(90deg, var(--brand) 0%, var(--brand-dark) 100%);
+            color: #ffffff;
+            padding: 10px 12px 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 0 0 var(--header-height);
+            position: relative;
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .intro-overlay .inicial {
+            color: 15px
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-grid;
+            place-items: center;
+            background: rgba(255, 255, 255, 0.12);
+            cursor: pointer;
+            margin-right: 6px;
+            flex: 0 0 40px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .back-btn:hover {
+            transform: scale(1.1) rotate(-180deg);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.056);
+            flex: 0 0 48px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block
+        }
+
+        .avatar-inicial {
+            width: 100px;
+            height: 100px;
+            border-radius: 90%;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.056);
+            flex: 0 0 48px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .avatar-inicial:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.3)
+        }
+
+        .meta {
+            flex: 1;
+            min-width: 0
+        }
+
+        .meta .name {
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .meta .status {
+            font-size: 12px;
+            opacity: 0.95
+        }
+
+        .icons {
+            display: flex;
+            gap: 8px;
+            margin-left: 8px
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: inline-grid;
+            place-items: center;
+            background: rgba(255, 255, 255, 0.12);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .icon-btn:hover {
+            transform: translateY(-2px) scale(1.1);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .icon-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* chat */
+        .chat {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1 1 auto;
+            overflow: hidden
+        }
+
+        .messages {
+            flex: 1 1 auto;
+            overflow: auto;
+            padding-right: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px
+        }
+
+        .bubble {
+            max-width: 78%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            line-height: 1.35;
+            box-shadow: 0 6px 12px rgba(12, 30, 60, 0.04);
+            font-size: 14px;
+            white-space: pre-wrap
+        }
+
+        .bot {
+            align-self: flex-start;
+            background: var(--bot-bubble);
+            border-top-left-radius: 6px;
+            color: #0c2b45
+        }
+
+        .user {
+            align-self: flex-end;
+            background: var(--user-bubble);
+            border-top-right-radius: 6px;
+            color: #06301a
+        }
+
+        .typing {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            font-style: italic;
+            color: #2b486f
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--brand);
+            border-radius: 50%;
+            opacity: 0.85;
+            animation: blink 1s infinite
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: .12s
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: .24s
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: .18
+            }
+
+            50% {
+                opacity: 1
+            }
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px
+        }
+
+        .opt {
+            background: white;
+            border: 1px solid rgba(15, 77, 182, 0.12);
+            padding: 10px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: left;
+            color: #07284a;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .opt:hover {
+            background: rgba(15, 77, 182, 0.04);
+            transform: translateX(4px);
+            box-shadow: 0 4px 8px rgba(15, 77, 182, 0.1);
+        }
+
+        .opt:active {
+            transform: scale(0.98);
+        }
+
+        .footer {
+            display: flex;
+            gap: 8px;
+            padding: 10px;
+            background: transparent;
+            align-items: center
+        }
+
+        .start-btn {
+            background: var(--brand);
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .start-btn:hover {
+            background: var(--brand-dark);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(15, 77, 182, 0.3);
+        }
+
+        .start-btn:active {
+            transform: scale(0.95);
+        }
+
+        .start-btn.restart {
+            background: #475569;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .start-btn.restart:hover {
+            background: #5a6472;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3);
+        }
+
+        .start-btn.restart:active {
+            transform: scale(0.95);
+        }
+
+        /* profile modal */
+        .profile-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(5, 10, 20, 0.45);
+            z-index: 40
+        }
+
+        .profile-card {
+            width: 360px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 18px;
+            color: #1b2b43;
+            box-shadow: 0 10px 30px rgba(8, 20, 40, 0.12)
+        }
+
+        .profile-top {
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+
+        .profile-top img {
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            object-fit: cover
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px
+        }
+
+        .pbtn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #e6eef9;
+            cursor: pointer;
+            background: #f7fbff;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .pbtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .pbtn:active {
+            transform: scale(0.98);
+        }
+
+        .pbtn.whats {
+            background: linear-gradient(90deg, var(--brand), var(--brand-dark));
+            color: #fff;
+            border: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .pbtn.whats:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(15, 77, 182, 0.4);
+        }
+
+        .pbtn.whats:active {
+            transform: scale(0.98);
+        }
+
+        .small {
+            font-size: 13px;
+            color: #546579
+        }
+
+        /* side panel */
+        .side {
+            width: 260px;
+            background: linear-gradient(180deg, #ffffff, #f7fbff);
+            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid rgba(10, 30, 70, 0.04)
+        }
+
+        .side h4 {
+            margin: 6px 6;
+            text-align: center;
+        }
+
+        .side p {
+            font-size: 13px;
+            color: #4b5b6b;
+            text-align: center;
+        }
+
+        /* result card */
+        .result-card {
+            border-radius: 12px;
+            padding: 14px;
+            color: #08304a;
+            box-shadow: 0 8px 18px rgba(8, 20, 40, 0.08);
+            transform-origin: center;
+            opacity: 0;
+            transform: translateY(18px) scale(0.94);
+            transition: opacity .55s ease, transform .55s ease;
+        }
+
+        .stage-title {
+            font-weight: 800;
+            font-size: 16px;
+            margin-bottom: 6px
+        }
+
+        .stage-desc {
+            font-size: 14px;
+            color: #0d3350
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px
+        }
+
+        .action-btn {
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            flex: 1;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .action-btn:active {
+            transform: scale(0.98);
+        }
+
+        .action-whats {
+            background: linear-gradient(90deg, var(--brand), var(--brand-dark));
+            color: #fff;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .action-whats:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(15, 77, 182, 0.4);
+        }
+
+        .action-whats:active {
+            transform: scale(0.98);
+        }
+
+        /* intro overlay */
+        .intro-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.95), rgba(11, 56, 170, 0.95));
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .brasfort-title {
+            font-weight: 900;
+            letter-spacing: 6px;
+            margin: 0;
+            display: inline-block;
+            transform-origin: center;
+            filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.25))
+        }
+
+        .brasfort-sub {
+            opacity: .95;
+            margin-top: 8px
+        }
+
+        .intro-card {
+            background: rgba(0, 0, 0, 0);
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 360px
+        }
+
+        .intro-cta {
+            margin-top: 14px;
+            padding: 10px 16px;
+            border-radius: 12px;
+            border: none;
+            background: #0096D1;
+            color:var(--brand)
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .intro-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .intro-cta:active {
+            transform: scale(0.95);
+        }
+
+        .intro-small {
+            font-size: 13px;
+            opacity: .9;
+            margin-top: 10px
+        }
+
+        /* responsive */
+        @media(max-width:900px) {
+            .app {
+                flex-direction: column;
+                align-items: center
+            }
+
+            .side {
+                display: none
+            }
+
+            .phone {
+                height: 100vh;
+                width: 100%
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stage">
+        <div class="app">
+            <div class="phone" role="application" aria-label="Chat BIA">
+                <!-- header -->
+                <div class="header">
+                    <div class="back-btn" id="backBtn" title="Voltar" aria-label="Voltar">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                            <path d="M15 18l-6-6 6-6" stroke="#fff" stroke-width="1.6" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div class="avatar" id="avatarBtn" title="Perfil da BIA" aria-label="Perfil da BIA">
+                        <img src="imgs/robo.png"
+                            alt="BIA avatar">
+                    </div>
+                    <div class="meta">
+                        <div class="name">Ag. Brasfort</div>
+                        <div class="status">Online</div>
+                    </div>
+                    <div class="icons">
+                        <div class="icon-btn" id="callBtn" title="Abrir canal Gente em Foco"
+                            aria-label="Abrir canal Gente em Foco">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12 1.05.34 2.07.65 3.05a2 2 0 0 1-.45 2.11L8.91 10.91a16 16 0 0 0 6 6l1.03-1.03a2 2 0 0 1 2.11-.45c.98.31 2 .53 3.05.65A2 2 0 0 1 22 16.92z"
+                                    stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div class="icon-btn" id="videoBtn" title="Abrir canal Gente em Foco"
+                            aria-label="Abrir canal Gente em Foco">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                <path d="M23 7l-7 5v4l7 5V7zM1 5h14v14H1z" stroke="#fff" stroke-width="1.2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <!-- chat -->
+                <div class="chat" id="chatArea">
+                    <div class="messages" id="messages"></div>
+                     
+                    <div class="footer">
+
+                        <button class="start-btn" id="startBtn">Iniciar conversa</button>
+                    </div>
+                </div>
+                 
+                <!-- INTRO OVERLAY (macro -> micro effect) -->
+                <div class="intro-overlay" id="introOverlay" aria-hidden="false">
+                    <div style="text-align:center">
+                        <div class="brasfort-title" id="brasfortTitle" style="font-size:52px;transform:scale(1);"></div>
+                        <div class="brasfort-sub" style="font-size:14px;margin-top:8px;opacity:.95"></div>
+                        <div class="brasfort-sub" style="font-size:14px;margin-top:8px;opacity:.95"></div>
+                         
+                        <div class="intro-card" style="margin-top:18px">
+                            <img class="avatar-inicial"
+                                src="imgs/robo.png"
+                                alt="Foto-chatbot">
+                            <div style="font-weight:700;font-size:16px;margin-bottom:6px">Agente Virtual da Brasfort</div>
+                            <div style="font-size:12px;color:#ffffffa8;opacity: 0.9;">
+                                Toque para iniciar e descobrir em qual estágio você se encontra.
+                            </div>
+
+                            <button class="intro-cta" id="introStartBtn" style="display:inline-block">Iniciar agora</button>
+                        </div>
+                    </div>
+                </div>
+                 
+            </div>
+             
+            <aside class="side" aria-hidden>
+                <h4>Orientação Rápida</h4>
+                <p>A interação é composta por 6 perguntas curtas, cada uma com 3 respostas possíveis.</p>
+                <p>Cada resposta representa um <a href="acurvadamudanca.html"> nível </a>diferente de maturidade na
+                    mudança.</p>
+                <p>Ao final, mostra em qual estágio da mudança a pessoa está, desde “<b>Choque/Incerteza”</b> até
+                    “<b>Integração</b>”.</p>
+
+
+            </aside>
+        </div>
+    </div>
+     
+    <!-- profile modal -->
+    <div class="profile-modal" id="profileModal" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="profile-card" role="document">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <strong>Agente Virtual da Brasfort</strong>
+                <button onclick="closeModal()"
+                    style="background:transparent;border:none;font-size:18px;cursor:pointer;transition: all 0.3s ease;">✕</button>
+            </div>
+            <div class="profile-top">
+                <img src="imgs/robo.png"
+                    alt="bia">
+                <div>
+                    <div style="font-weight:700">Agente Virtual da Brasfort</div>
+                    <div class="small">Apoio em gestão e desenvolvimento — respostas diretas e objetivas.</div>
+                    <div style="margin-top:8px" class="small">Status: <span style="color:var(--brand)">Online</span>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top:12px">
+                <div class="small">Contato RH</div>
+                <div style="display:flex;gap:8px;margin-top:8px" class="profile-actions">
+                    <button class="pbtn whats" onclick="openWhatsApp()">Acessar Canal<br><small
+                            style="opacity:.9">BRASFORT PRO</small></button>
+                    <button class="pbtn" onclick="copyNumber()">Copiar endereço</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     
+    <script>
+        // ----------------------------------------------------------------------
+        // [CONFIGURAÇÃO DE BACK-END] - AJUSTE DA URL E VARIÁVEIS DE RASTREIO
+        // ----------------------------------------------------------------------
+
+        // ⚠️ SUA URL DA API - JÁ AJUSTADA COM BASE NO QUE VOCÊ FORNECEU
+        const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHg43ly-AQUA9EXoThj4SIhdUARfLAf6TWw-z6k1wYdrN71muzjfa2YxHeNa8Wmyus/exec';
+
+        let sessionResponses = [];
+
+        // FUNÇÃO PARA GERAR UM ID ÚNICO E PERSISTENTE (USANDO localStorage)
+        function getDeviceId() {
+            let deviceId = localStorage.getItem('brasfort_device_id');
+            if (!deviceId) {
+                // Gera um UUID simples (evitando bibliotecas externas)
+                deviceId = 'ID-' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
+                localStorage.setItem('brasfort_device_id', deviceId);
+            }
+            return deviceId;
+        }
+        const currentDeviceId = getDeviceId(); // Captura o ID do dispositivo/usuário no carregamento
+
+        // Função utilitária para obter timestamp em horário de Brasília (ISO-like com offset -03:00)
+        function getBrasiliaISOString(now = new Date()) {
+            const formatter = new Intl.DateTimeFormat('sv-SE', {
+                timeZone: 'America/Sao_Paulo',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                fractionalSecondDigits: 3,
+                hourCycle: 'h23'
+            });
+            const parts = formatter.formatToParts(now);
+            let isoString = '';
+            for (let part of parts) {
+                isoString += part.value;
+            }
+            return isoString + '-03:00'; // Fuso fixo de Brasília (sem horário de verão desde 2019)
+        }
+
+        // ----------------------------------------------------------------------
+        // [FIM DA CONFIGURAÇÃO DE BACK-END]
+        // ----------------------------------------------------------------------
+
+        // ---------- ROTEIRO (cada resposta com feedback estratégico) ----------
+        const roteiro = [
+            {
+                q: 'Você sente que entendeu bem o que está mudando e por quê?',
+                opts: [
+                    { t: 'Ainda não, tô tentando entender.', p: 0, feedback: 'Entendido. Comece por solicitar um resumo conciso ao seu gestor e destaque as 3 dúvidas principais.' },
+                    { t: 'Entendo parte, mas ainda tenho dúvidas.', p: 8, feedback: 'Bom sinal, documente as dúvidas por tópico e peça esclarecimentos curtos e objetivos.' },
+                    { t: 'Sim, entendi o que mudou e por quê.', p: 17, feedback: 'Ótimo. Use esse entendimento para priorizar mudanças práticas no seu dia a dia.' }
+                ]
+            },
+            {
+                q: 'Mesmo com dúvidas, você toparia experimentar o novo jeito de trabalhar?',
+                opts: [
+                    { t: 'Prefiro manter o jeito antigo por enquanto.', p: 0, feedback: 'Compreendo. Sugiro definir um teste controlado para avaliar riscos sem comprometer tarefas críticas.' },
+                    { t: 'Tenho receio, mas estou tentando me adaptar.', p: 8, feedback: 'Certo, tente aplicar em tarefas de baixo impacto e registre aprendizados para ajustar.' },
+                    { t: 'Sim! Estou curioso(a) e quero testar.', p: 17, feedback: 'Perfeito, defina critérios objetivos para julgar o teste e repita quando aprovar.' }
+                ]
+            },
+            {
+                q: 'E você já tentou aplicar algo diferente no seu dia a dia?',
+                opts: [
+                    { t: 'Ainda não comecei.', p: 0, feedback: 'Sem problema, identifique uma tarefa simples esta semana e execute em modo de teste.' },
+                    { t: 'Testei algo, mas só de vez em quando.', p: 8, feedback: 'Bom começo. Faça um registro breve dos resultados para decidir se amplia a mudança.' },
+                    { t: 'Já adaptei minha rotina e uso o novo.', p: 17, feedback: 'Ótimo nível de engajamento, documente os passos que funcionam para replicar.' }
+                ]
+            },
+            {
+                q: 'Quando aplica o novo formato, você se sente seguro(a)?',
+                opts: [
+                    { t: 'Não sei aplicar direito ainda.', p: 0, feedback: 'Recomendado: peça um walkthrough (passo a passo) prático com um colega experiente, 15–30 minutos podem acelerar.' },
+                    { t: 'Consigo, mas às vezes fico com dúvida.', p: 8, feedback: 'Normal. Um checklist simples ajuda a reduzir a incerteza e padronizar a execução.' },
+                    { t: 'Sim, aplico com segurança e clareza.', p: 17, feedback: 'Excelente, registre pontos de melhoria e compartilhe com o time.' }
+                ]
+            },
+            {
+                q: 'Você já ajudou algum colega a entender esse novo jeito?',
+                opts: [
+                    { t: 'Ainda não compartilhei.', p: 0, feedback: 'Tudo bem, primeiro consolide seu conhecimento e depois compartilhe passos claros.' },
+                    { t: 'Já dei uma força, mas fiquei inseguro(a).', p: 8, feedback: 'Ao ensinar você solidifica seu aprendizado, prepare um roteiro curto para ganhar confiança.' },
+                    { t: 'Sim, já orientei colegas com confiança.', p: 17, feedback: 'Ótimo, seu papel como multiplicador é estratégico; continue apoiando o time.' }
+                ]
+            },
+            {
+                q: 'Hoje, o novo jeito já parece natural pra você?',
+                opts: [
+                    { t: 'Prefiro o jeito antigo.', p: 0, feedback: 'Entendo. Observe benefícios concretos por 1 semana para avaliar possíveis ganhos.' },
+                    { t: 'Tô me acostumando, mas ainda exige esforço.', p: 8, feedback: 'Progresso válido. Divida a tarefa até que os passos se tornem automáticos.' },
+                    { t: 'Já é natural — virou rotina.', p: 17, feedback: 'Parabéns, integração está ocorrendo. Considere apoiar colegas com pequenas sessões.' }
+                ]
+            }
+        ];
+
+        // ---------- ELEMENTOS ----------
+        const messages = document.getElementById('messages');
+        const startBtn = document.getElementById('startBtn');
+        const introOverlay = document.getElementById('introOverlay');
+        const introStartBtn = document.getElementById('introStartBtn');
+        const brasfortTitle = document.getElementById('brasfortTitle');
+        const avatarBtn = document.getElementById('avatarBtn');
+        const profileModal = document.getElementById('profileModal');
+        const callBtn = document.getElementById('callBtn');
+        const videoBtn = document.getElementById('videoBtn');
+        const backBtn = document.getElementById('backBtn');
+
+        let index = 0, score = 0, maxScore = roteiro.length * 17, started = false;
+        let resultCard = null, tipsBubble = null;
+
+        // animate brasfort title: macro -> micro
+        (function animateTitle() {
+            brasfortTitle.style.transform = 'scale(2.6)';
+            brasfortTitle.style.opacity = '0';
+            setTimeout(() => {
+                brasfortTitle.style.transition = 'transform 800ms cubic-bezier(.2,.9,.2,1), opacity 700ms';
+                brasfortTitle.style.transform = 'scale(1)';
+                brasfortTitle.style.opacity = '1';
+            }, 80);
+        })();
+
+        // ---------- HELPERS ----------
+        function appendBubble(text, cls = 'bot', html = false) {
+            const el = document.createElement('div');
+            el.className = 'bubble ' + cls;
+            if (html) el.innerHTML = text;
+            else el.textContent = text;
+            messages.appendChild(el);
+            messages.scrollTop = messages.scrollHeight;
+            return el;
+        }
+
+        function showTypingBubble(messageLabel = 'O agente está pensando...') {
+            const t = document.createElement('div');
+            t.className = 'bubble bot typing';
+            t.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span> ' + messageLabel;
+            messages.appendChild(t);
+            messages.scrollTop = messages.scrollHeight;
+            return t;
+        }
+
+        function renderOptions(opts) {
+            const container = document.createElement('div');
+            container.className = 'options';
+            opts.forEach((opt) => {
+                const b = document.createElement('button');
+                b.className = 'opt';
+                b.textContent = opt.t;
+                b.onclick = () => selectOption(opt, container);
+                container.appendChild(b);
+            });
+            messages.appendChild(container);
+            messages.scrollTop = messages.scrollHeight;
+            return container;
+        }
+
+        // ---------- SELEÇÃO (Com Coleta de Dados) ----------
+        function selectOption(opt, container) {
+            appendBubble(opt.t, 'user');
+
+            // LÓGICA DE COLETA DE DADOS: registra a resposta antes de avançar
+            const currentQuestion = roteiro[index].q;
+            sessionResponses.push({
+                pergunta: currentQuestion,
+                resposta: opt.t,
+                pontos: opt.p,
+                feedback: opt.feedback,
+                timestamp_resposta: getBrasiliaISOString() // Substituído: usa horário de Brasília
+            });
+
+            score += opt.p;
+            container.remove();
+
+            const thinking = showTypingBubble();
+            const thinkingTime = 900 + Math.floor(Math.random() * 900);
+            setTimeout(() => {
+                thinking.remove();
+                appendBubble(opt.feedback, 'bot');
+
+                index++;
+                if (index < roteiro.length) {
+                    setTimeout(() => askQuestion(index), 800);
+                } else {
+                    setTimeout(showResultCard, 900);
+                }
+            }, thinkingTime);
+        }
+
+        function askQuestion(i) {
+            const t = showTypingBubble('O agente está preparando a próxima pergunta...');
+            const delay = 500 + Math.floor(Math.random() * 600);
+            setTimeout(() => {
+                t.remove();
+                const q = roteiro[i];
+                appendBubble('<strong>' + q.q + '</strong>', 'bot', true);
+                renderOptions(q.opts);
+            }, delay);
+        }
+
+        // ---------- ENVIO DE DADOS (Nova Função) ----------
+        function sendDataToServer(deviceId, finalPercent, finalStage) {
+            if (GOOGLE_APP_SCRIPT_URL === 'SUA_URL_DA_API_AQUI') {
+                console.error('⚠️ URL da API não configurada corretamente. Dados não serão salvos.');
+                return;
+            }
+
+            const payload = {
+                deviceId: deviceId,
+                data_preenchimento: getBrasiliaISOString(), // Substituído: usa horário de Brasília
+                estagio_final: finalStage,
+                percentual: finalPercent,
+                respostas: sessionResponses // Array de todas as respostas detalhadas
+            };
+
+            // Usa fetch para enviar os dados
+            fetch(GOOGLE_APP_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Modo necessário para Apps Script
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            })
+                .then(() => {
+                    console.log('Dados enviados ao servidor (verifique o Google Sheets).');
+                })
+                .catch((error) => {
+                    console.error('Erro ao tentar enviar dados:', error);
+                });
+        }
+
+
+        // ---------- INICIO DA CONVERSA ----------
+        function startConversation() {
+            // hide intro overlay (if visible)
+            if (introOverlay && introOverlay.style.display !== 'none') {
+                introOverlay.style.display = 'none';
+                introOverlay.setAttribute('aria-hidden', 'true');
+            }
+
+            // reset
+            messages.innerHTML = '';
+            index = 0; score = 0; started = true; resultCard = null; tipsBubble = null;
+            sessionResponses = []; // Limpa as respostas antigas ao reiniciar
+            startBtn.textContent = 'Reiniciar conversa';
+            startBtn.classList.add('restart');
+
+            // initial BIA intro as chat message (with typing)
+            const t = showTypingBubble(' Iniciando a sua avaliação...');
+            setTimeout(() => {
+                t.remove();
+                appendBubble('Olá! sou o Agente Virtual da Brasfort.'); // intro short
+                appendBubble('Por gentileza, responda às opções conforme achar mais adequado. Vamos começar?'); // instruction
+                setTimeout(() => askQuestion(0), 900);
+            }, 1000);
+        }
+
+        // ---------- RESULTADO (CARD COLORIDO + MENSAGEM DE ORIENTAÇÃO, AGORA SALVA DADOS) ----------
+        // ---------- RESULTADO (COM CHUVA DE EMOJIS FUNCIONANDO!) ----------
+        function showResultCard() {
+            const percent = Math.min(Math.round((score / maxScore) * 100), 100);
+            let label = '', emoji = '', explanation = '', color = '', textColor = '#08304a';
+
+            if (percent <= 25) {
+                label = 'Choque / Incerteza';
+                emoji = '';
+                explanation = 'Com base nas suas respostas, você está no começo do processo de assimilação. Priorize compreensão objetiva do propósito e peça apoio direto.';
+                color = 'var(--card-red)';
+                textColor = '#6b1e1e';
+            } else if (percent <= 50) {
+                label = 'Negação / Crise';
+                emoji = '';
+                explanation = 'Você demonstra resistência ou dúvidas. Foque em ações pequenas e aprendizado com colegas que já aplicam.';
+                color = 'var(--card-yellow)';
+                textColor = '#6b4900';
+            } else if (percent <= 75) {
+                label = 'Aceitação / Decisão';
+                emoji = '';
+                explanation = 'Você está experimentando e aprendendo. Continue consolidando rotinas para ganhar confiança e consistência.';
+                color = 'var(--card-green)';
+                textColor = '#165c2b';
+            } else {
+                label = 'Integração';
+                emoji = '';
+                explanation = 'Você incorporou o novo e já serve de referência. Mantenha o suporte a colegas e proponha melhorias contínuas.';
+                color = 'var(--card-blue)';
+                textColor = '#06314d';
+            }
+
+            // Salva os dados
+            sendDataToServer(currentDeviceId, percent, label);
+
+            // Cria o card com emoji no título
+            resultCard = document.createElement('div');
+            resultCard.className = 'result-card';
+            resultCard.style.background = color;
+            resultCard.style.color = textColor;
+            resultCard.style.position = 'relative';
+            resultCard.style.zIndex = '10';
+            resultCard.innerHTML = `
+        <div class="stage-title" style="font-size:24px;">
+            ${emoji} Estágio: <strong>${label}</strong> ${emoji}
+        </div>
+        <div class="stage-desc" style="margin-top:8px;">${explanation}</div>
+        <div class="action-buttons">
+            <button class="action-btn action-whats" onclick="openWhatsApp()">Falar com RH</button>
+            <button class="action-btn" onclick="showSuggestions()">Ver sugestões</button>
+        </div>
+    `;
+
+            messages.appendChild(resultCard);
+            messages.scrollTop = messages.scrollHeight;
+
+            // Animação de entrada do card
+            requestAnimationFrame(() => {
+                resultCard.style.opacity = '1';
+                resultCard.style.transform = 'translateY(0) scale(1)';
+            });
+
+            // ==== AQUI DISPARA A CHUVA DE EMOJIS ====
+            setTimeout(() => {
+                criarChuvaDeEmojis(label);
+            }, 600);
+        }
+        function getTipsForStage(label) {
+            if (label === 'Choque / Incerteza') {
+                return [
+                    'Peça um resumo objetivo ao líder sobre os motivos da mudança.',
+                    'Reserve 15 minutos para revisar a documentação essencial.',
+                    'Liste 3 dúvidas e encaminhe ao seu gestor ou RH.'
+                ];
+            }
+            if (label === 'Negação / Crise') {
+                return [
+                    'Escolha uma atividade pequena para testar por 3 dias.',
+                    'Converse com um colega que já adotou o novo processo.',
+                    'Registre resultados simples: o que funcionou e o que ajustar.'
+                ];
+            }
+            if (label === 'Aceitação / Decisão') {
+                return [
+                    'Padronize passos que deram certo para replicar.',
+                    'Peça feedback do líder sobre suas práticas iniciais.',
+                    'Compartilhe um aprendizado com um colega esta semana.'
+                ];
+            }
+            return [
+                'Documente e compartilhe práticas bem-sucedidas com o time.',
+                'Organize um microtreino de 15 minutos para colegas.',
+                'Proponha uma melhoria com base na sua experiência prática.'
+            ];
+        }
+
+        // ---------- HANDLERS ----------
+        // start via intro button
+        introStartBtn.addEventListener('click', startConversation);
+        // footer start button behavior
+        startBtn.addEventListener('click', () => {
+            // if intro still visible, hide and start; else simply restart
+            if (introOverlay && introOverlay.style.display !== 'none') {
+                startConversation();
+            } else {
+                startConversation();
+            }
+        });
+
+        // profile modal
+        avatarBtn.addEventListener('click', () => {
+            profileModal.style.display = 'flex';
+            profileModal.setAttribute('aria-hidden', 'false');
+        });
+        window.closeModal = () => {
+            profileModal.style.display = 'none';
+            profileModal.setAttribute('aria-hidden', 'true');
+        };
+
+        // call / video / back
+        callBtn.addEventListener('click', openWhatsApp);
+        videoBtn.addEventListener('click', openWhatsApp);
+        backBtn.addEventListener('click', () => {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.reload();
+            }
+        });
+
+        // utilities exposed for buttons
+        window.copyNumber = () => {
+            const number = 'https://pflab.top/BOSUXHN3KG';
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(number).then(() => {
+                    alert('Endereço copiado: ' + number);
+                }).catch(() => {
+                    // Fallback para navegadores mais antigos
+                    const textArea = document.createElement('textarea');
+                    textArea.value = number;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        alert('Endereço copiado: ' + number);
+                    } catch (err) {
+                        alert('Falha ao copiar. Número: ' + number);
+                    }
+                    document.body.removeChild(textArea);
+                });
+            } else {
+                // Fallback antigo
+                const textArea = document.createElement('textarea');
+                textArea.value = number;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    alert('Endereço copiado: ' + number);
+                } catch (err) {
+                    alert('Falha ao copiar. Número: ' + number);
+                }
+                document.body.removeChild(textArea);
+            }
+        };
+        window.showSuggestions = () => {
+            if (tipsBubble) return;
+            appendBubble('Pensei em algumas sugestões interessantes para você:', 'bot');
+            const label = resultCard.querySelector('.stage-title strong').textContent;
+            const tips = getTipsForStage(label);
+            const tipsHtml = `<ul style="margin:8px 0 0 18px; padding-left:18px;">` +
+                tips.map(t => `<li style="margin-bottom:6px;">${t}</li>`).join('') +
+                `</ul>`;
+            tipsBubble = appendBubble(tipsHtml, 'bot', true);
+            appendBubble('Se preferir falar com alguém do time, utilize o botão “Falar com RH” para receber mais informações.', 'bot');
+            const btn = resultCard.querySelector('button[onclick="showSuggestions()"]');
+            if (btn) btn.style.display = 'none';
+        };
+        // Nova função openWhatsApp() - evita COOP com link dinâmico
+        function openWhatsApp() {
+            const phone = "";
+            const message = encodeURIComponent("Olá, equipe de RH! Acabei de concluir minha avaliação de adaptação à mudança com a BIA e gostaria de conversar sobre os resultados.");
+            const url = `https://pflab.top/BOSUXHN3KG`;
+            // Cria um link invisível e simula clique (bypassa window.open)
+            const link = document.createElement('a');
+            link.href = url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer'; // Segurança: não permite opener
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // initial tiny intro inside chat as fallback (will be removed when introOverlay used)
+        (function initialIntroFallback() {
+            // placeholder message will be replaced when the user starts via intro overlay
+            // but keep small hint in case overlay blocked
+            appendBubble('Toque em "Começar agora" para iniciar a avaliação conduzida pela BIA.', 'bot');
+        })();
+        function criarChuvaDeEmojis(estagio) {
+            // Define qual emoji vai chover de acordo com o estágio
+            const emojisPorEstagio = {
+                'Choque / Incerteza': ['😟', '🤔', '😟', '🤔', '😟'],
+                'Negação / Crise': ['⚠️', '😣', '⚠️', '😣', '⚠️'],
+                'Aceitação / Decisão': ['🌱', '✅', '🌱', '✅', '🌱'],
+                'Integração': ['🏆', '🚀', '🏆', '🚀', '🏆', '🚀', '🏆']
+            };
+
+            const emojis = emojisPorEstagio[estagio] || ['💙', '⭐'];
+
+            // Cria um container fixo atrás de tudo (mas só dentro do .phone)
+            let container = document.getElementById('emojiRainContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'emojiRainContainer';
+                container.style.position = 'absolute';
+                container.style.inset = '0';
+                container.style.pointerEvents = 'none';
+                container.style.overflow = 'hidden';
+                container.style.zIndex = '5'; // atrás do chat, mas na frente do fundo
+                document.querySelector('.phone').appendChild(container);
+            }
+
+            // Limpa chuvas antigas (caso reinicie)
+            container.innerHTML = '';
+
+            const quantidade = window.innerWidth < 500 ? 18 : 28; // menos no celular
+
+            for (let i = 0; i < quantidade; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    const emojiTexto = emojis[Math.floor(Math.random() * emojis.length)];
+
+                    emoji.textContent = emojiTexto;
+                    emoji.style.fontSize = Math.random() * 20 + 20 + 'px'; // 20–40px
+                    emoji.style.position = 'absolute';
+                    emoji.style.left = Math.random() * 100 + '%';
+                    emoji.style.bottom = '-60px';
+                    emoji.style.opacity = '1';
+                    emoji.style.userSelect = 'none';
+                    emoji.style.pointerEvents = 'none';
+                    emoji.style.animation = `subir ${Math.random() * 12 + 12}s linear forwards`;
+                    emoji.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+                    container.appendChild(emoji);
+
+                    // Animação suave de subir + fade + leve balanço
+                    const keyframes = `
+                @keyframes subir {
+                    0% {
+                        bottom: -60px;
+                        opacity: 0;
+                        transform: translateX(0) rotate(0deg);
+                    }
+                    15% {
+                        opacity: 0.6;
+                    }
+                    100% {
+                        bottom: 110vh;
+                        opacity: 0;
+                        transform: translateX(${Math.random() > 0.5 ? '' : '-'}${Math.random() * 120}px) rotate(${Math.random() * 720 - 360}deg);
+                    }
+                }
+            `;
+                    if (!document.getElementById('emojiRainStyle')) {
+                        const style = document.createElement('style');
+                        style.id = 'emojiRainStyle';
+                        style.textContent = keyframes;
+                        document.head.appendChild(style);
+                    }
+
+                    // Remove o emoji depois da animação para não pesar
+                    emoji.addEventListener('animationend', () => emoji.remove());
+                }, i * 300); // solta um a cada 300ms
+            }
+        }
+        // MODIFICAÇÃO MÍNIMA: chama a chuva assim que o card aparecer
+        // Substitua a linha que cria o resultCard (dentro da função showResultCard) por isso:
+
+        // ... depois de calcular o label (logo depois do if/else do estágio)
+
+        // CARD (mantém o que já tinha, só adiciona um pequeno título maior)
+        resultCard = document.createElement('div');
+        resultCard.className = 'result-card';
+        resultCard.style.background = color;
+        resultCard.style.color = textColor;
+        resultCard.style.position = 'relative';
+        resultCard.style.zIndex = '10';
+        resultCard.innerHTML = `
+                <div class="stage-title" style="font-size:24px;">
+                    ${emoji || '📊'} Estágio: <strong>${label}</strong> ${emoji || '📊'}
+                </div>
+                <div class="stage-desc" style="margin-top:8px;">${explanation}</div>
+                <div class="action-buttons">
+                    <button class="action-btn action-whats" onclick="openWhatsApp()">💬 Falar com RH</button>
+                    <button class="action-btn" onclick="showSuggestions()">💡 Ver sugestões</button>
+                </div>
+            `;
+        messages.appendChild(resultCard);
+        messages.scrollTop = messages.scrollHeight;
+
+        // ANIMAÇÃO DE ENTRADA DO CARD
+        requestAnimationFrame(() => {
+            resultCard.style.opacity = '1';
+            resultCard.style.transform = 'translateY(0) scale(1)';
+        });
+
+        // ==== AQUI DISPARA A CHUVA DE EMOJIS ====
+        setTimeout(() => {
+            criarChuvaDeEmojis(label);
+        }, 600); // começa logo depois do card aparecer
+    </script>
+</body>
+
+</html>

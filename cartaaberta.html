@@ -1,0 +1,394 @@
+<!DOCTYPE html> 
+<html lang="pt-BR"> 
+<head> 
+<meta charset="UTF-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>Rumo ao Novo | BRASFORT</title> 
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
+<style> 
+body { 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Barlow', sans-serif; 
+    background: #f4f6f8; 
+    display: flex; 
+    justify-content: center; 
+    color: #333; 
+    overflow-x: hidden;
+} 
+ 
+/* Barra de progresso */
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 6px;
+    background-color: #263868;
+    width: 0%;
+    transition: width 0.2s ease;
+    z-index: 1000;
+}
+ 
+.container { 
+    position: relative; 
+    width: 90%; 
+    max-width: 1000px; 
+    background: #FEFEFE; 
+    padding: 2rem; 
+    margin: 2rem 0; 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
+    border-radius: 12px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 2rem; 
+} 
+ 
+.header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    border-bottom: 3px solid #263868; 
+    padding-bottom: 1rem; 
+} 
+ 
+.logo { 
+    font-size: 28px; 
+    font-weight: 700; 
+    color: #263868; 
+} 
+ 
+.title-section { 
+    text-align: right; 
+} 
+ 
+.title-section .title { 
+    font-size: 18px; 
+    font-weight: 600; 
+    color: #263868; 
+} 
+ 
+.title-section .date { 
+    font-size: 14px; 
+    color: #A9ABAE; 
+    margin-top: 3px; 
+} 
+ 
+.main-content { 
+    display: flex; 
+    gap: 2rem; 
+    align-items: flex-start; 
+} 
+ 
+.photo-section { 
+    flex: 0 0 250px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+} 
+ 
+.photo-container { 
+    width: 220px; 
+    height: 280px; 
+    border-radius: 12px; 
+    overflow: hidden; 
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1); 
+    margin-bottom: 1rem; 
+    cursor: pointer; 
+    transition: transform 0.3s; 
+} 
+ 
+.photo-container:hover { 
+    transform: scale(1.05); 
+} 
+ 
+.photo-container img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+} 
+ 
+.photo-credit { 
+    font-size: 12px; 
+    color: #A9ABAE; 
+    text-align: center; 
+    margin-bottom: 10px; 
+} 
+ 
+.photo-text { 
+    font-size: 14px; 
+    color: #333; 
+    text-align: center; 
+    line-height: 1.5; 
+} 
+ 
+.quote { 
+    font-style: italic; 
+    color: #0096D1; 
+    font-size: 20px; 
+    text-align: center; 
+    padding: 15px 20px; 
+    border-center: 5px solid #263868; 
+    background-color: #ffffff; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    margin-top: 2rem; 
+} 
+ 
+.quote.active { 
+    background-color: #ffffff; 
+    color: #263868; 
+    transform: scale(1.05); 
+} 
+ 
+.text-section { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1rem; 
+    text-align: justify; 
+} 
+ 
+.article-title { 
+    font-weight: 700; 
+    font-size: 24px; 
+    color: #263868; 
+} 
+ 
+.subtitle { 
+    font-weight: 500; 
+    font-size: 16px; 
+    color: #006199; 
+} 
+ 
+.paragraph { 
+    line-height: 1.7; 
+    text-align: justify; 
+} 
+ 
+.paragraph:hover { 
+    background-color: #cfd1d328; 
+} 
+ 
+.highlight { 
+    background-color: #0096d141; 
+    font-weight: 600; 
+    padding: 2px 4px; 
+    border-radius: 3px; 
+} 
+ 
+.highlight-box { 
+    background-color: #0096d110; 
+    border-left: 5px solid #0096D1; 
+    padding: 15px; 
+    margin: 20px 0; 
+    border-radius: 5px; 
+    font-style: italic;
+    
+} 
+ 
+.footer-text { 
+    font-size: 12px; 
+    color: #A9ABAE; 
+    text-align: center; 
+    border-top: 1px solid #ddd; 
+    padding-top: 12px; 
+    margin-top: 2rem; 
+} 
+ 
+@media (max-width: 768px) { 
+    .main-content { 
+        flex-direction: column; 
+        align-items: center; 
+    } 
+}
+ 
+/* Botão flutuante inferior direito */
+#nextButton {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translatex(-50%);
+    background-color: #D2AE6D;
+    color: #FEFEFE;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    display: none; /* inicialmente escondido */
+    
+        /* 🔥 animação pulsante */
+    animation: pulse 1.5s infinite ease-in-out;
+}
+ 
+#nextButton:hover {
+    background-color: #0096D1;
+    transform: translatex(-50%) scale(1.05);
+    
+
+}
+@keyframes pulse {
+    0% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.08); }
+    100% { transform: translateX(-50%) scale(1); }
+}
+
+ 
+</style> 
+</head> 
+<audio id="som" src="teclar.mp3" autoplay></audio>
+<body> 
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="container"> 
+    <div class="header"> 
+        <div class="logo">CARTA ABERTA</div> 
+        <div class="title-section"> 
+            <div class="title">À comunidade do Grupo Brasfort</div> 
+            <div class="date">Brasília, 11 de novembro de 2025</div> 
+        </div> 
+    </div> 
+ 
+    <div class="main-content"> 
+        <div class="photo-section"> 
+            <div class="photo-container" id="photoExpand"> 
+                <img src="https://media.licdn.com/dms/image/v2/D4D03AQEal8kiv5XIWA/profile-displayphoto-scale_400_400/B4DZkWtr8yGsAk-/0/1757022699905?e=1764201600&v=beta&t=Jfqyq9GcL7YPODO449xi_618cIQyIZeCOd4MkiUAgZY" alt="Glenda Negreiros"> 
+            </div> 
+            <div class="photo-credit">Glenda Negreiros | GRUPO BRASFORT</div> 
+            <div class="photo-text">Executiva de Qualidade e Inovação</div> 
+            <div class="quote" id="quoteBox"><b>“Tive de lidar com o novo, me adaptar, confiar no processo e aprender a separar o que é emoção do que é método.”</b>
+            <br/>
+            <br/>
+            <b>“Governança não é distância. É cuidado, clareza e compromisso com o futuro.”</b></div>
+        </div> 
+ 
+        <div class="text-section" id="typingArea">
+            <!-- Conteúdo será digitado aqui -->
+        </div> 
+    </div> 
+ 
+    <div class="footer-text">Powered by BRASFORT</div> 
+</div> 
+ 
+<!-- Botão Avançar -->
+<button id="nextButton">Conheça a Curva da Mudança</button>
+ 
+<script> 
+// Alternância da citação
+const quote = document.getElementById('quoteBox'); 
+quote.addEventListener('click', () => { quote.classList.toggle('active'); });
+
+ 
+// Texto completo da carta
+const fullText = `
+<div class="article-title">Equipe,</div>
+
+<div class="paragraph">
+Se eu pudesse dar voz à nossa empresa, ela diria: eu cresci.<br>
+E como todo crescimento, vieram novas responsabilidades, parcerias e aprendizados.<br>
+Agora é hora de amadurecer, e é isso que chamamos de governança.
+</div>
+
+<div class="paragraph">
+Entrei nessa jornada há um ano e meio sem saber tudo o que significava. Vivi, como muitos de vocês, o choque, a incerteza e até o medo.<br>
+Tive de lidar com o novo, me adaptar, confiar no processo e aprender a separar o que é emoção do que é método.</div>
+
+<div class="paragraph">
+Foi assim que descobri que governança não é distância, é cuidado.<br>
+É fortalecer o que já estava em movimento, trazer clareza onde havia dúvida e garantir que o que construímos siga firme para o futuro.
+</div>
+
+<div class="highlight-box">
+Hoje, estamos juntos em um ponto de virada.<br>
+E isso não é só sobre sistemas ou processos, é sobre o jeito como escolhemos caminhar daqui pra frente.
+</div>
+
+<div class="paragraph">
+Nos últimos meses, revisitamos o modo de fazer, unimos sistemas, ajustamos rotinas e aprendemos, na prática, o valor da transição.
+A mudança não é apenas algo que acontece fora de nós, ela começa dentro, no olhar, nas atitudes e na disposição de seguir aprendendo.
+</div>
+
+<div class="paragraph">
+Por isso, deixo um convite: faça uma pausa e pense com sinceridade...<br>
+<em>Em que ponto da Curva da Mudança você se vê hoje?</em>
+</div>
+
+<div class="paragraph">
+Não é um teste. Nem uma cobrança.<br>
+É apenas uma pausa para perceber como cada um tem enfrentado o novo, no seu ritmo, mas com propósito.<br>
+Porque toda mudança é pessoal antes de ser organizacional.
+</div>
+
+<div class="paragraph">
+Cada pessoa reage de um jeito, com curiosidade, dúvida, empolgação ou receio. E está tudo bem.<br>
+O importante é reconhecer onde estamos e dar o próximo passo.
+</div>
+
+<div class="paragraph">
+A Curva da Mudança não é um gráfico, é um espelho.
+Ela nos ajuda a enxergar o momento que vivemos e a seguir com mais leveza e consciência.
+</div>
+
+<div class="paragraph" style="text-align: right; margin-top: 1.5rem;">
+<strong>Glenda Negreiros</strong><br>
+GRUPO BRASFORT
+</div>
+`;
+ 
+const typingArea = document.getElementById("typingArea");
+const progressBar = document.getElementById("progressBar");
+const nextButton = document.getElementById("nextButton");
+let i = 0;
+ 
+// Função de digitação
+function typeWriter() {
+    if (i < fullText.length) {
+        typingArea.innerHTML = fullText.substring(0, i);
+        const progress = (i / fullText.length) * 100;
+        progressBar.style.width = progress + "%";
+        i++;
+        setTimeout(typeWriter, 20);
+    } else {
+        progressBar.style.width = "100%";
+        nextButton.style.display = "block"; // mostrar botão ao finalizar
+    }
+}
+ 
+  const audio = document.getElementById("som");
+  let vezes = 0;
+  const repetir = 3; // 8 repetições para completar 2 minutos
+
+  audio.addEventListener("ended", () => {
+    vezes++;
+    if (vezes < repetir) {
+      audio.currentTime = 0;
+      audio.play();
+    }
+  });
+
+  audio.play();
+// Exibir digitação após carregamento da página
+window.onload = typeWriter;
+ 
+// Evento do botão com fade-out e redirecionamento
+nextButton.addEventListener("click", () => {
+    const container = document.querySelector(".container");
+    container.style.transition = "opacity 0.8s ease";
+    container.style.opacity = "0";
+    progressBar.style.transition = "opacity 0.8s ease";
+    progressBar.style.opacity = "0";
+    nextButton.style.transition = "opacity 0.8s ease";
+    nextButton.style.opacity = "0";
+
+    setTimeout(() => {
+        window.location.href = "acurvadamudanca.html";
+    }, 800);
+});
+</script> 
+</body> 
+</html>
+

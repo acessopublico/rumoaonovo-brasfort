@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Curva da Mudança Brasfort: entenda os 8 estágios da adaptação e como superar cada fase com sucesso.">
+    <title>Rumo ao Novo | BRASFORT</title>
+
+    <!-- Fontes e ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --azul-brasfort: #263868;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Barlow', sans-serif;
+            background: #f5f7fa;
+            color: #2d2d2d;
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ===== ADICIONADO DO SEGUNDO HTML ===== */
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        /* ===== CARDS DO SEGUNDO HTML ===== */
+        .central-section {
+            /* Espaçamento vertical: padding superior e inferior para separar da seção anterior e próxima */
+            padding: 120px 40px;
+            /* Ajuste aqui para alterar o espaçamento vertical geral da seção central */
+            background: #0d2c68;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0px;
+            /* Espaçamento vertical entre os cards da seção central */
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 24px;
+            padding: 40px 35px;
+            width: 800px;
+            max-width: 95%;
+            text-align: left;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 150, 255, 0.08), rgba(255, 255, 255, 0.08));
+            opacity: 0.5;
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        .central-section h1 {
+            font-size: 1.9rem;
+            margin-bottom: 18px;
+            color: #0d2c68;
+            z-index: 1;
+            position: relative;
+        }
+
+        .central-section p {
+            font-size: 1.1rem;
+            color: #4f5562;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            z-index: 1;
+            position: relative;
+        }
+
+        .central-section button {
+            background: linear-gradient(90deg, #006199, #0096d1);
+            border: none;
+            border-radius: 12px;
+            padding: 14px 28px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 8px 20px rgba(0, 97, 153, 0.3);
+            z-index: 1;
+            position: relative;
+        }
+
+        .central-section button:hover {
+            transform: scale(1.08);
+            box-shadow: 0 10px 25px rgba(0, 97, 153, 0.45);
+        }
+
+        .icon {
+            font-size: 3rem;
+            color: #008fb3;
+            margin-bottom: 15px;
+            animation: pulseGlow 2s infinite;
+            z-index: 1;
+            position: relative;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                text-shadow: 0 0 8px rgba(0, 150, 255, 0.5);
+            }
+
+            50% {
+                text-shadow: 0 0 18px rgba(0, 150, 255, 0.9);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .central-section .card {
+                width: 90%;
+                padding: 30px 22px;
+                text-align: left;
+            }
+
+            .central-section h1 {
+                font-size: 1.6rem;
+            }
+
+            .central-section p {
+                font-size: 1rem;
+                text-align: left;
+            }
+
+            .central-section button {
+                font-size: 1rem;
+                padding: 12px 22px;
+            }
+        }
+
+        /* ===== BOTÃO AJUDA DO SEGUNDO HTML ===== */
+        .help-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #D2AE6D;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 16px 22px;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .help-btn:hover {
+            background: #00a7cc;
+            transform: scale(1.08);
+        }
+
+        /* ===== MODAL DE AJUDA DO SEGUNDO HTML ===== */
+        .help-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+            z-index: 200;
+        }
+
+        .help-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .help-modal {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px 35px;
+            width: 500px;
+            max-width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+            animation: fadeInUp 0.4s ease;
+            position: relative;
+        }
+
+        .help-modal h2 {
+            color: #0d2c68;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .help-modal ul {
+            text-align: left;
+            list-style: none;
+            padding: 0;
+            margin-bottom: 25px;
+            color: #4f5562;
+        }
+
+        .help-modal li {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .help-modal li::before {
+            content: "• ";
+            color: #0096d1;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 1.3rem;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .help-modal button {
+            background: #0096d1;
+            border: none;
+            color: #fff;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .help-modal button:hover {
+            background: #00b0e0;
+        }
+
+        /* Overlay escurecido (mantido mas não usado agora) */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            z-index: 900;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(rgba(38, 56, 104, 0.85), rgba(38, 56, 104, 50)),
+                url('https://www.brasfort.com.br/images/2020/10/11/whatsapp-image-2020-08-21-at-21.33.59.jpeg') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 160px 20px 80px;
+            /* Espaçamento vertical: padding inferior para separar da curva */
+        }
+
+        .hero h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+            max-width: 900px;
+            margin: 0 auto;
+            opacity: 0.95;
+            text-align: left;
+        }
+
+        /* Curva */
+        .curva-container {
+            /* Espaçamento vertical: margem negativa superior para sobrepor hero, margem inferior para separar do carrossel */
+            max-width: 1000px;
+            margin: -40px auto 80px;
+            /* Ajuste aqui para alterar o sobreposição/espaçamento com hero e próximo elemento */
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .curva-box {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+            position: relative;
+            /* Para posicionar botões absolutos */
+        }
+
+        .curva-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Botões para ampliar e baixar a imagem da curva */
+        .curva-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+            z-index: 20;
+        }
+
+        .curva-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            font-size: 1rem;
+            color: #263868;
+        }
+
+        .curva-btn:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        /* Modal para ampliar imagem da curva */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            overflow: auto;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* -------------------- CARDS / CARROSSEL -------------------- */
+        .carousel-container {
+            /* Espaçamento vertical: padding inferior para separar da seção central */
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            overflow: hidden;
+            padding: 15px 0 40px;
+            /* Ajuste padding inferior para espaçamento vertical com próximo elemento */
+            margin: 0 auto 80px;
+            /* Margem inferior para espaçamento geral */
+            font-family: 'Barlow', sans-serif;
+            flex: 1;
+        }
+
+        .carousel-header {
+            text-align: center;
+            margin-bottom: 25px;
+            /* Espaçamento vertical entre header e track */
+            padding: 0 15px;
+        }
+
+        .carousel-header h1 {
+            color: #263868;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .carousel-header p {
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+            max-width: 900px;
+            margin: 0 auto;
+            opacity: 0.95;
+            text-align: left;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 2s ease;
+            align-items: center;
+            cursor: grab;
+            padding: 10px 0;
+            user-select: none;
+        }
+
+        .card.carousel-card {
+            /* Para diferenciar dos novos cards */
+            flex: 0 0 80%;
+            max-width: 350px;
+            margin: 0 10px;
+            background: #FEFEFE;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.5s, box-shadow 0.5s, opacity 0.5s;
+            opacity: 0.5;
+            transform: scale(0.9);
+            display: flex;
+            flex-direction: column;
+            border: 2px solid transparent;
+            
+        }
+
+        .card.carousel-card.active {
+            transform: scale(1);
+            opacity: 1;
+            box-shadow: 0 15px 35px rgba(38, 56, 104, 0.2);
+            border-color: #D2AE6D;
+        }
+
+        /* Responsividade para mobile: cards ocupam 100% da largura, sem margem lateral excessiva */
+        @media (max-width: 768px) {
+            .card.carousel-card {
+                flex: 0 0 90%;
+                max-width: none;
+                margin: 0 5px;
+            }
+
+            .carousel-track {
+                padding: 10px 5px;
+            }
+        }
+
+        .card-header {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .card.carousel-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .card.carousel-card.active img {
+            transform: scale(1.05);
+        }
+
+        .card-number {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #263868;
+            color: #FEFEFE;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-grow: 1;
+            font-size: 0.95rem;
+        }
+
+        .card-content h3 {
+            margin: 0;
+            font-size: 1.3em;
+            color: #263868;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .card-content .quote {
+            font-style: italic;
+            color: #006199;
+            font-weight: 600;
+            font-size: 1.05em;
+            border-left: 3px solid #D2AE6D;
+            padding-left: 10px;
+        }
+
+        .card-content p {
+            margin: 0;
+            font-size: 0.9em;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .section-title {
+            font-weight: 600;
+            color: #006199;
+            display: inline-block;
+        }
+
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            /* Espaçamento vertical entre track e controles */
+            flex-wrap: wrap;
+        }
+
+        .arrow {
+            background: #263868;
+            color: #FEFEFE;
+            border: none;
+            font-size: 1.4em;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .arrow:hover {
+            background: #0096D1;
+            transform: scale(1.1);
+        }
+
+        /* Responsividade para mobile: setas maiores e touch-friendly */
+        @media (max-width: 768px) {
+            .arrow {
+                width: 50px;
+                height: 50px;
+                font-size: 1.6em;
+            }
+        }
+
+        .indicators {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #A9ABAE;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .indicator.active {
+            background: #263868;
+            transform: scale(1.3);
+        }
+
+        /* Rodapé removido, botão de voltar agora fixo discreto no inferior esquerdo */
+        /* Botão de voltar discreto: fixo bottom-left, pequeno e semi-transparente */
+        .back-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(38, 56, 104, 0.8);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            font-family: 'Barlow', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 50;
+            opacity: 0.7;
+        }
+
+        .back-btn:hover {
+            background: #263868;
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+                text-align: left;
+            }
+
+            .back-btn {
+                bottom: 15px;
+                left: 15px;
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Curva da Mudança</h1>
+        <p>A curva da mudança é um estudo real, baseado nas pesquisas da psiquiatra Elizabeth Kübler-Ross.</p>
+        <p>Ela mostra que, quando algo muda (na vida ou no trabalho) todos atravessamos estágios emocionais previsíveis.</p><br>
+        <p>Não é invenção. Não é teoria solta. É comportamento humano.</p>
+        <p>Use a curva para olhar para si e entender seu próximo passo.</p>
+    </section>
+    <!-- Curva -->
+    <div class="curva-container">
+        <div class="curva-box" data-aos="zoom-in">
+            <img id="curvaImg" src="imgs/curvacompleta.png" alt="Curva da Mudança Brasfort" loading="lazy">
+            <!-- Botões de ação para a imagem da curva -->
+            <div class="curva-actions">
+                <button class="curva-btn" id="zoomBtn" title="Ampliar imagem"><i
+                        class="fas fa-search-plus"></i></button>
+                <button class="curva-btn" id="downloadBtn" title="Baixar imagem"><i
+                        class="fas fa-download"></i></button>
+            </div>
+        </div>
+    </div>
+    <!-- Modal para ampliar imagem da curva -->
+    <div class="image-modal" id="imageModal">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <div class="modal-content">
+            <img id="modalImg" src="" alt="Imagem ampliada">
+        </div>
+    </div>
+    <!-- CARDS - Estágios da Jornada -->
+    <div class="carousel-container">
+        <div class="carousel-header">
+            <h1>Seu comportamento revela sua fase</h1>
+            <p>Navegue por cada card e entenda, de forma simples e prática, os sinais de cada fase, como eles aparecem na rotina e o que você pode fazer para lidar melhor com cada momento da jornada.</p>
+        </div>
+        <div class="carousel-track"></div>
+        <div class="carousel-controls">
+            <button class="arrow left" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
+            <div class="indicators"></div>
+            <button class="arrow right" aria-label="Próximo"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+    </div>
+    <!-- NOVA SEÇÃO: Central de Ideias e Mudança -->
+    <div class="central-section">
+        <!-- 🔹 Card 2 - Curva da Mudança -->
+        <div class="card" id="change-card">
+            <i class="fa-solid fa-magnifying-glass-chart icon" style="color: #263868;"></i>
+            <h1>Você já dá sinais.</h1>
+            <p>A pergunta é: qual estágio você está vivendo hoje?</p>
+            <button id="discover-btn">
+                <i class="fa-solid fa-user"></i> Descobrir agora
+            </button>
+        </div>
+    </div>
+    <!-- 🔸 Botão flutuante de Ajuda -->
+    <button class="help-btn" id="helpBtn">
+        <i class="fa-solid fa-circle-question"></i> Para quem pedir ajuda
+    </button>
+    <!-- 🔸 Modal de Ajuda -->
+    <div class="help-overlay" id="helpOverlay">
+        <div class="help-modal">
+            <i class="fa-solid fa-xmark close-btn" id="closeHelp"></i>
+            <h2>Escolha o apoio certo</h2>
+            <ul>
+                <li><strong>Líder imediato:</strong> ajuda a remover obstáculos, direciona e aprova ações necessárias.</li>
+                <li><strong>Multiplicador do setor:</strong> esclarece dúvidas práticas e orienta na execução “mão na massa”.</li>
+                <li><strong>Plantão Gente & Gestão:</strong> oferece entendimento sobre a mudança, processos e fluxo.</li>
+                <li><strong>Qualidade (POP):</strong> orienta sobre o padrão correto e procedimentos oficiais.</li>
+                <li><strong>TI / Sistemas (Sankhya, PontoTel, PL):</strong> resolve problemas de acesso, erros ou falhas de tela.</li>
+            </ul>
+            <button id="contactGG">
+                <i class="fa-solid fa-comments"></i> Falar com Gente & Gestão
+            </button>
+        </div>
+    </div>
+    <!-- Botão de voltar discreto -->
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+    </script>
+    <!-- Script do carrossel: fluxo infinito mantido, para auto-rotate ao clicar nas setas, responsivo via CSS -->
+    <script>
+        const cardData = [
+            { title: "CHOQUE", icon: "fa-bolt", quote: "“Alguma coisa vai mudar!”", image: "imgs/choque.jpeg", description: "É o primeiro impacto. A novidade causa surpresa e questionamentos.", whatHappens: "Você tenta entender o que muda e o que permanece igual.", howToHandle: "Mantenha a calma, evite conclusões precipitadas e busque informações oficiais antes de reagir." },
+            { title: "INCERTEZA", icon: "fa-question", quote: "“Como isso me afetará?”", image: "imgs/incerteza.jpeg", description: "Depois do susto, surgem dúvidas e inseguranças sobre o futuro.", whatHappens: "Você continua suas atividades, mas a mente busca respostas e tenta prever impactos.", howToHandle: "Anote suas dúvidas, confirme informações em fontes confiáveis e evite criar cenários que ainda não existem." },
+            { title: "NEGAÇÃO", icon: "fa-ban", quote: "“É maior do que eu imaginava...”", image: "imgs/negacao.jpeg", description: "A resistência aparece e o antigo parece mais seguro.", whatHappens: "Você tenta manter tudo como era antes, mesmo sabendo que a mudança é oficial.", howToHandle: "Reflita se o antigo era realmente melhor ou apenas mais familiar. Dê espaço para testar o novo sem julgamento." },
+            { title: "CRISE", icon: "fa-triangle-exclamation", quote: "“Pra quê isso?”", image: "imgs/crise.jpeg", description: "É o momento de maior desconforto, com frustração e queda de motivação.", whatHappens: "Os erros aumentam e a sensação é de que o esforço não gera resultado.", howToHandle: "Organize prioridades, peça orientação e avance um passo de cada vez." },
+            { title: "FUGA", icon: "fa-person-running", quote: "“Vou fazer do meu jeito.”", image: "imgs/fuga.jpeg", description: "A resistência cresce e cada um passa a agir da própria forma.", whatHappens: "Você até entende o novo, mas evita segui-lo, mantendo hábitos antigos.", howToHandle: "Converse com a liderança, alinhe expectativas e identifique como se ajustar sem sabotar o processo." },
+            { title: "ACEITAÇÃO", icon: "fa-handshake", quote: "“A ficha caiu!”", image: "imgs/aceitacao.jpeg", description: "Você percebe que a mudança veio para ficar e começa a enxergar sentido.", whatHappens: "O medo diminui e você se dispõe a usar o novo fluxo com mais naturalidade.", howToHandle: "Pratique constantemente e reconheça seus avanços, mesmo os pequenos." },
+            { title: "DECISÃO", icon: "fa-check-circle", quote: "“Faz sentido.”", image: "imgs/decisao.jpeg", description: "O novo começa a se consolidar e você escolhe fazer parte dele.", whatHappens: "A confiança aumenta e você passa a sugerir melhorias ao invés de resistir.", howToHandle: "Continue aprimorando e compartilhe aprendizados com o time." },
+            { title: "INTEGRAÇÃO", icon: "fa-users", quote: "“Pode funcionar e ser bom.”", image: "imgs/integracao.jpeg", description: "A mudança deixa de ser novidade e se torna padrão.", whatHappens: "O time trabalha alinhado, seguindo o mesmo fluxo, com mais segurança e consistência.", howToHandle: "Mantenha a evolução contínua e evite voltar a hábitos antigos quando novos desafios surgirem." }
+        ];
+        const track = document.querySelector('.carousel-track');
+        const indicatorsContainer = document.querySelector('.indicators');
+        const nextBtn = document.querySelector('.arrow.right');
+        const prevBtn = document.querySelector('.arrow.left');
+        let currentIndex = 0;
+        let autoRotate;
+        function createCarousel() {
+            track.innerHTML = '';
+            indicatorsContainer.innerHTML = '';
+            cardData.forEach((card, index) => {
+                const el = document.createElement('div');
+                el.className = 'card carousel-card';
+                el.innerHTML = `
+                    <div class="card-header">
+                        <img src="${card.image}" alt="${card.title}">
+                        <div class="card-number">${index + 1}</div>
+                    </div>
+                    <div class="card-content">
+                        <h3><i class="fa-solid ${card.icon}"></i> ${card.title}</h3>
+                        <div class="quote">${card.quote}</div>
+                        <p><span class="section-title">Sinais:</span> ${card.description}</p>
+                        <p><span class="section-title">Na rotina:</span> ${card.whatHappens}</p>
+                        <p><span class="section-title">Como lidar:</span> ${card.howToHandle}</p>
+                    </div>`;
+                track.appendChild(el);
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                if (index === 0) indicator.classList.add('active');
+                indicatorsContainer.appendChild(indicator);
+            });
+            updateCarousel();
+            autoRotate = setInterval(nextCard, 15000); // Inicia auto-rotate
+        }
+        function updateCarousel() {
+            const cards = document.querySelectorAll('.card.carousel-card');
+            cards.forEach((c, i) => c.classList.toggle('active', i === currentIndex));
+            const indicators = document.querySelectorAll('.indicator');
+            indicators.forEach((ind, i) => ind.classList.toggle('active', i === currentIndex));
+            // Ajuste responsivo no translateX: usa largura dinâmica para mobile
+            const cardWidth = window.innerWidth <= 768 ? window.innerWidth - 40 : 370; // 40px para padding/margins em mobile
+            track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        }
+        function nextCard() {
+            currentIndex = (currentIndex + 1) % cardData.length;
+            updateCarousel();
+        }
+        function prevCard() {
+            currentIndex = (currentIndex - 1 + cardData.length) % cardData.length;
+            updateCarousel();
+        }
+        nextBtn.addEventListener('click', () => {
+            clearInterval(autoRotate); // Para auto-rotate ao clicar
+            nextCard();
+        });
+        prevBtn.addEventListener('click', () => {
+            clearInterval(autoRotate); // Para auto-rotate ao clicar
+            prevCard();
+        });
+        // Re-inicia auto-rotate após 10s de inatividade (opcional, para facilitar movimento)
+        let inactivityTimer;
+        function resetInactivity() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                autoRotate = setInterval(nextCard, 80000);
+            }, 300000);
+        }
+        nextBtn.addEventListener('click', resetInactivity);
+        prevBtn.addEventListener('click', resetInactivity);
+        // Suporte a teclado para facilitar navegação
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                clearInterval(autoRotate);
+                nextCard();
+                resetInactivity();
+            } else if (e.key === 'ArrowLeft') {
+                clearInterval(autoRotate);
+                prevCard();
+                resetInactivity();
+            }
+        });
+        createCarousel();
+        // Atualiza translateX em resize para responsividade
+        window.addEventListener('resize', updateCarousel);
+    </script>
+    <!-- Script para ampliar e baixar imagem da curva -->
+    <script>
+        const zoomBtn = document.getElementById('zoomBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const imageModal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        const closeModal = document.getElementById('closeModal');
+        const curvaImg = document.getElementById('curvaImg');
+
+        zoomBtn.addEventListener('click', () => {
+            modalImg.src = curvaImg.src;
+            imageModal.classList.add('active');
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            const a = document.createElement('a');
+            a.href = curvaImg.src;
+            a.download = 'curva-da-mudanca-brasfort.png';
+            a.click();
+        });
+
+        closeModal.addEventListener('click', () => {
+            imageModal.classList.remove('active');
+        });
+
+        imageModal.addEventListener('click', (e) => {
+            if (e.target === imageModal) {
+                imageModal.classList.remove('active');
+            }
+        });
+    </script>
+    <!-- Script dos novos botões (CORRIGIDO) -->
+    <script>
+        // Botão "Descobrir agora" → vai para a autoavaliação
+        const discoverBtn = document.getElementById('discover-btn');
+        const body = document.body;
+
+        if (discoverBtn) {
+            discoverBtn.addEventListener('click', () => {
+                body.classList.add('fade-out');
+                setTimeout(() => {
+                    window.location.href = 'autoavaliacao.html';
+                }, 600);
+            });
+        }
+
+        // Modal de ajuda
+        const helpBtn = document.getElementById('helpBtn');
+        const helpOverlay = document.getElementById('helpOverlay');
+        const closeHelp = document.getElementById('closeHelp');
+        const contactGG = document.getElementById('contactGG');
+
+        if (helpBtn) {
+            helpBtn.addEventListener('click', () => {
+                helpOverlay.classList.add('active');
+            });
+        }
+
+        if (closeHelp) {
+            closeHelp.addEventListener('click', () => {
+                helpOverlay.classList.remove('active');
+            });
+        }
+
+        // Botão "Falar com Gente & Gestão" dentro do modal
+        if (contactGG) {
+            contactGG.addEventListener('click', () => {
+                helpOverlay.classList.remove('active');
+                body.classList.add('fade-out');
+                setTimeout(() => {
+                    window.location.href = "https://pro.brasfort.com.br/v4/solicita_facil/formulario_resposta.php?token=c9db8f9fa9b8bccb28acb108e1d07a3c";
+                }, 600);
+            });
+        }
+
+        // Botão voltar (já estava correto)
+        const backButton = document.getElementById('backButton');
+        if (backButton) {
+            backButton.addEventListener('click', () => {
+                window.history.back();
+            });
+        }
+    </script>
+</body>
+
+</html>
