@@ -135,8 +135,8 @@
         }
 
         .avatar-inicial {
-            width: 100px;
-            height: 100px;
+            width: 150px;
+            height: 150px;
             border-radius: 90%;
             overflow: hidden;
             border: 2px solid rgba(255, 255, 255, 0.056);
@@ -546,14 +546,15 @@
 
         .intro-cta {
             margin-top: 14px;
-            padding: 10px 16px;
+            padding: 12px 18px;
             border-radius: 12px;
             border: none;
-            background: #0096D1;
+            background: #D2AE6D;
             color:var(--brand)
             font-weight: 800;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 12px;
         }
 
         .intro-cta:hover {
@@ -703,7 +704,7 @@
                 </div>
             </div>
             <div style="margin-top:12px">
-                <div class="small">Contato RH</div>
+                <div class="small">Canal RH</div>
                 <div style="display:flex;gap:8px;margin-top:8px" class="profile-actions">
                     <button class="pbtn whats" onclick="openWhatsApp()">Acessar Canal<br><small
                             style="opacity:.9">BRASFORT PRO</small></button>
@@ -763,7 +764,7 @@
         // ---------- ROTEIRO (cada resposta com feedback estratégico) ----------
         const roteiro = [
             {
-                q: 'Você sente que entendeu bem o que está mudando e por quê?',
+                q: '1/6. Você sente que entendeu bem o que está mudando e por quê?',
                 opts: [
                     { t: 'Ainda não, tô tentando entender.', p: 0, feedback: 'Entendido. Comece por solicitar um resumo conciso ao seu gestor e destaque as 3 dúvidas principais.' },
                     { t: 'Entendo parte, mas ainda tenho dúvidas.', p: 8, feedback: 'Bom sinal, documente as dúvidas por tópico e peça esclarecimentos curtos e objetivos.' },
@@ -771,7 +772,7 @@
                 ]
             },
             {
-                q: 'Mesmo com dúvidas, você toparia experimentar o novo jeito de trabalhar?',
+                q: '2/6. Mesmo com dúvidas, você toparia experimentar o novo jeito de trabalhar?',
                 opts: [
                     { t: 'Prefiro manter o jeito antigo por enquanto.', p: 0, feedback: 'Compreendo. Sugiro definir um teste controlado para avaliar riscos sem comprometer tarefas críticas.' },
                     { t: 'Tenho receio, mas estou tentando me adaptar.', p: 8, feedback: 'Certo, tente aplicar em tarefas de baixo impacto e registre aprendizados para ajustar.' },
@@ -779,7 +780,7 @@
                 ]
             },
             {
-                q: 'E você já tentou aplicar algo diferente no seu dia a dia?',
+                q: '3/6. E você já tentou aplicar algo diferente no seu dia a dia?',
                 opts: [
                     { t: 'Ainda não comecei.', p: 0, feedback: 'Sem problema, identifique uma tarefa simples esta semana e execute em modo de teste.' },
                     { t: 'Testei algo, mas só de vez em quando.', p: 8, feedback: 'Bom começo. Faça um registro breve dos resultados para decidir se amplia a mudança.' },
@@ -787,7 +788,7 @@
                 ]
             },
             {
-                q: 'Quando aplica o novo formato, você se sente seguro(a)?',
+                q: '4/6. Quando aplica o novo formato, você se sente seguro(a)?',
                 opts: [
                     { t: 'Não sei aplicar direito ainda.', p: 0, feedback: 'Recomendado: peça um walkthrough (passo a passo) prático com um colega experiente, 15–30 minutos podem acelerar.' },
                     { t: 'Consigo, mas às vezes fico com dúvida.', p: 8, feedback: 'Normal. Um checklist simples ajuda a reduzir a incerteza e padronizar a execução.' },
@@ -795,7 +796,7 @@
                 ]
             },
             {
-                q: 'Você já ajudou algum colega a entender esse novo jeito?',
+                q: '5/6. Você já ajudou algum colega a entender esse novo jeito?',
                 opts: [
                     { t: 'Ainda não compartilhei.', p: 0, feedback: 'Tudo bem, primeiro consolide seu conhecimento e depois compartilhe passos claros.' },
                     { t: 'Já dei uma força, mas fiquei inseguro(a).', p: 8, feedback: 'Ao ensinar você solidifica seu aprendizado, prepare um roteiro curto para ganhar confiança.' },
@@ -803,7 +804,7 @@
                 ]
             },
             {
-                q: 'Hoje, o novo jeito já parece natural pra você?',
+                q: '6/6. Hoje, o novo jeito já parece natural pra você?',
                 opts: [
                     { t: 'Prefiro o jeito antigo.', p: 0, feedback: 'Entendo. Observe benefícios concretos por 1 semana para avaliar possíveis ganhos.' },
                     { t: 'Tô me acostumando, mas ainda exige esforço.', p: 8, feedback: 'Progresso válido. Divida a tarefa até que os passos se tornem automáticos.' },
